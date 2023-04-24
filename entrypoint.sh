@@ -30,10 +30,12 @@ chmod 644 "$KNOWN_HOSTS_PATH"
 chmod 600 "$WPENGINE_SSH_KEY_PRIVATE_PATH"
 chmod 644 "$WPENGINE_SSH_KEY_PUBLIC_PATH"
 
-ls -al .git/
-cat .git/HEAD
-echo $GIT_DIR
-git status
+git config --global --add safe.directory /github/workspace
+
+ls -al .git/ || true
+cat .git/HEAD || true
+echo $GIT_DIR || true
+git status || true
 git config core.sshCommand "ssh -i $WPENGINE_SSH_KEY_PRIVATE_PATH -o UserKnownHostsFile=$KNOWN_HOSTS_PATH"
 git remote add $WPENGINE_ENV git@$WPENGINE_HOST:$WPENGINE_ENV/$WPENGINE_ENVIRONMENT_NAME.git
 git push -fu $WPENGINE_ENV $BRANCH:$REMOTE_BRANCH
